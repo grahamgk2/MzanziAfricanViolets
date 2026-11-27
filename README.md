@@ -5,7 +5,7 @@ Hosted free on GitHub Pages.
 
 ## Licences
 - **Code** (HTML templates, CSS): MIT, see `LICENSE`.
-- **Content** (text, photos, plant descriptions, PDFs): (c) Graham Goode, all rights reserved.
+- **Content** (text, photos, plant descriptions): (c) Graham Goode, all rights reserved.
 
 ## Set up GitHub Pages
 1. Create a GitHub repo named `YOURNAME.github.io` (public) so the site is served at the root: `https://grahamgk2.github.io/MzanziAfricanViolets/`.
@@ -22,7 +22,6 @@ Hosted free on GitHub Pages.
 - Search all files for `TODO` and fill them in.
 - Replace `https://grahamgk2.github.io/MzanziAfricanViolets` with your real address in every `.html` file (canonical tags), `sitemap.xml`, `robots.txt` and the JSON-LD block in `index.html`. In VS Code use Find in Files (Ctrl+Shift+F) then Replace All.
 - Add photos to `images/` (home page expects `images/hero.jpg`). Give each `<img>` meaningful `alt` text.
-- Add PDFs to `pdfs/` and list them in `pdfs.html`.
 
 ## Preview locally
 ```

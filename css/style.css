@@ -38,3 +38,4 @@ main.wide{max-width:72rem}
 .warn{color:#a40000;font-weight:600}
 .btn{display:inline-block;background:var(--purple);color:#fff;border:0;padding:.55rem 1rem;border-radius:6px;font-size:1rem;text-decoration:none;cursor:pointer}
 .small{font-size:.85rem;color:#555}
+.hero{width:100%;max-height:28rem;object-fit:cover}
