@@ -48,7 +48,11 @@ main.wide{max-width:72rem}
 .small{font-size:.85rem;color:var(--muted)}
 .hero{width:100%;max-height:28rem;object-fit:cover}
 /* Contact form */
-#contact label{display:block;font-weight:600;margin-bottom:.25rem}
-#contact input[type=text],#contact input[type=email],#contact textarea{width:100%;max-width:34rem;padding:.55rem;font:inherit;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:6px}
+#contact{max-width:40rem}
+#contact .row{display:grid;grid-template-columns:9rem 1fr;gap:.5rem 1rem;align-items:start;margin-bottom:1rem}
+#contact label{font-weight:600;padding-top:.5rem}
+#contact input[type=text],#contact input[type=email],#contact textarea{display:block;width:100%;min-width:0;padding:.55rem;font:inherit;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:6px}
+#contact textarea{min-height:14rem;resize:vertical;overflow:auto}
 #contact .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 #form-status{font-weight:600}
+@media (max-width:34rem){#contact .row{grid-template-columns:1fr}#contact label{padding-top:0}}
