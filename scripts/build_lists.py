@@ -10,9 +10,7 @@ import html, io, re, sys, zipfile
 from datetime import date
 from pathlib import Path
 import openpyxl
-from PIL import Image, ImageFile
-
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 XLSX = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "imports" / "African Violet varieties.xlsx"
@@ -27,7 +25,7 @@ LISTS = [
          h1="African Violet Cultivars", noun="African violet",
          note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.",
          intro="Leaves of the African violet varieties currently available from our collection."),
-    dict(sheet="Species", note="", drawing=2, photo_col=2, page="species.html", folder="species",
+    dict(sheet="Species", note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.", drawing=2, photo_col=2, page="species.html", folder="species",
          name=1, desc=3, type=None, hybridizer=None, avail=6, extra=4,
          title="Species Streptocarpus (Saintpaulia) Leaves South Africa | Mzanzi African Violets",
          h1="Species African Violets (Streptocarpus)", noun="species",
@@ -92,11 +90,8 @@ def card(i, item, cfg, img):
     return (f'<li class="card" data-name="{esc(item["name"], True)}" data-search="{esc((item["name"]+" "+item["desc"]+" "+item["hybridizer"]).lower(), True)}">'
             f'{pic}<div class="body"><h3>{esc(item["name"])}</h3>{"".join(meta)}'
             f'<p>{esc(item["desc"])}</p>{extra}'
-            f'<div class="qty" role="group" aria-label="Sets of two leaves of {esc(item["name"], True)}">'
-            f'<button type="button" class="minus" aria-label="Fewer">&minus;</button>'
-            f'<output>0</output>'
-            f'<button type="button" class="plus" aria-label="More">+</button>'
-            f'<span>sets of 2 leaves</span></div></div></li>')
+            f'<button type="button" class="toggle" aria-pressed="false">Add 1 set of 2 leaves</button>'
+            f'</div></li>')
 
 
 PAGE = """<!DOCTYPE html>
@@ -122,7 +117,7 @@ PAGE = """<!DOCTYPE html>
 <h1>{h1}</h1>
 <p>{intro} {count} available. Last updated {updated}.</p>
 {note}
-<p>Leaves are sold in sets of two for R30 per set. <strong>Minimum order: 5 sets (R150)</strong>, plus postage. Choose your sets below, then send the order to us. We reply with an invoice that lists what is available, the postage quote and our banking details. See <a href="contact.html">Orders &amp; Contact</a>.</p>
+<p>Leaves are sold in sets of two for R30 per set, and <strong>only one set per cultivar</strong> can be ordered. <strong>Minimum order: 5 sets (R150)</strong>, so please choose at least 5 different cultivars, plus postage. Choose your sets below, then send the order to us. We reply with an invoice that lists what is available, the postage quote and our banking details. See <a href="contact.html">Orders &amp; Contact</a>.</p>
 <p><a href="plants.html">&larr; All plant lists</a></p>
 <label class="find">Search this list <input type="search" id="find" placeholder="Name, colour, hybridiser"></label>
 <ul class="cards" id="cards">
@@ -168,12 +163,21 @@ def main():
                 s += "-2"
             seen.add(s)
             img = None
-            if r in imgs:
+            # A file in imports/photo-overrides/<slug>.(jpg|jpeg|png|webp) replaces the spreadsheet photo.
+            data = None
+            for ext in ("jpg", "jpeg", "png", "webp"):
+                f = ROOT / "imports" / "photo-overrides" / f"{s}.{ext}"
+                if f.exists():
+                    data = f.read_bytes()
+                    break
+            if data is None and r in imgs:
+                data = imgs[r]
+            if data is not None:
                 try:
-                    w, h = save_thumb(imgs[r], folder / f"{s}.jpg")
+                    w, h = save_thumb(data, folder / f"{s}.jpg")
                     img = (f"{s}.jpg", w, h)
                 except Exception as e:
-                    print(f"  WARNING: unreadable photo for {name!r} (sheet row {r + 1}): {e}")
+                    print(f"  WARNING: damaged photo for {ascii(name)} (sheet row {r + 1}, save as imports/photo-overrides/{s}.jpg to replace it): {e}")
             items.append((dict(name=name, desc=g("desc"), type=g("type"), hybridizer=g("hybridizer"), extra=g("extra")), img))
         items.sort(key=lambda t: t[0]["name"].lower())
         cards = "\n".join(card(i, it, cfg, img) for i, (it, img) in enumerate(items))
