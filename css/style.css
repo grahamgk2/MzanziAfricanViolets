@@ -42,3 +42,5 @@ main.wide{max-width:72rem}
 .toggle{margin-top:auto;padding:.6rem;border:1px solid var(--purple);background:#fff;color:var(--purple);border-radius:6px;font-size:.95rem;cursor:pointer}
 .card.on{border:2px solid var(--purple)}
 .card.on .toggle{background:var(--purple);color:#fff}
+.brand a{display:inline-flex;align-items:center;gap:.6rem}
+.brand img{width:36px;height:36px;border-radius:50%;border:2px solid #fff}
