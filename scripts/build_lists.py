@@ -26,11 +26,61 @@ LISTS = [
          note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.",
          intro="Leaves of the African violet varieties currently available from our collection."),
     dict(sheet="Species", note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.", drawing=2, photo_col=2, page="species.html", folder="species",
-         name=1, desc=3, type=None, hybridizer=None, avail=6, extra=4,
+         name=0, desc=3, type=None, hybridizer=None, avail=6, extra=4, group=True,
          title="Species Streptocarpus (Saintpaulia) Leaves South Africa | Mzanzi African Violets",
          h1="Species African Violets (Streptocarpus)", noun="species",
          intro="Leaves of species currently available. African violets are now classed as Streptocarpus (formerly Saintpaulia)."),
 ]
+
+
+# Headings for the AVSA species codes (K. Barbi 2019; J. Smith and W. Goretsky 2018).
+# Saintpaulia is now classified as Streptocarpus section Saintpaulia (Nishii et al. 2015).
+# Corrections to names in the spreadsheet. Remove an entry once the sheet itself is fixed.
+NAME_FIXES = {
+    "S. 5c1. cl. ionanthus House of Amani": "S. 5c1. cl. House of Amani",
+    "S. 5c1. cl. ionanthus Mather 'A'": "S. 5c1. cl. Mather 'A'",
+    "S. 5c1. cl. ionanthus Mather 'B'": "S. 5c1. cl. Mather 'B'",
+    "S. 5c2. cl. diplotrichus #3083": "S. 5c2. cl. #3083",
+    "S. 5c2. cl. diplotrichus Parker": "S. 5c2. cl. Parker",
+    "S. 5c2. cl. diplotrichus Punter No. 0": "S. 5c2. cl. Punter No. 0",
+    "S. 5c2. cl. diplotrichus Variegata Pink": "S. 5c2. cl. Variegata Pink",
+    "S. 5c2. cl. diplotrichus Variegata White": "S. 5c2. cl. Variegata White",
+}
+
+GROUPS = {
+    "1": "S. 1. inconspicuus", "2": "S. 2. afroviola", "3": "S. 3. shumensis", "4": "S. 4. teitensis",
+    "5": "S. 5. ionanthus", "5a": "S. 5a. subspecies grandifolius", "5b": "S. 5b. subspecies grotei",
+    "5c": "S. 5c. subspecies ionanthus", "5c1": "S. 5c1. variety ionanthus", "5c2": "S. 5c2. variety diplotrichus",
+    "5d": "S. 5d. subspecies mafiensis", "5e": "S. 5e. subspecies occidentalis", "5f": "S. 5f. subspecies orbicularis",
+    "5g": "S. 5g. subspecies pendulus", "5h": "S. 5h. subspecies rupicolus", "5i": "S. 5i. subspecies velutinus",
+    "6": "S. 6. brevipilosus", "7": "S. 7. nitidus", "8": "S. 8. ulugurensis", "9": "S. 9. goetzeanus",
+    "10": "S. 10. watkinsii",
+}
+
+
+def code_of(name):
+    """'S. 5b. cl. grotei Amani' -> '5b'; '' if the name has no code."""
+    m = re.match(r"S\.\s*(\d+)([a-z]?)(\d*)\.", name)
+    return "".join(m.groups()) if m else ""
+
+
+def chain_of(code):
+    """'5c1' -> ['5', '5c', '5c1'];  '3' -> ['3'];  '' -> ['']."""
+    m = re.match(r"(\d+)([a-z]?)(\d*)$", code)
+    if not m:
+        return [code]
+    n, letter, digit = m.groups()
+    out = [n]
+    if letter:
+        out.append(n + letter)
+    if digit:
+        out.append(n + letter + digit)
+    return out
+
+
+def code_key(code):
+    m = re.match(r"(\d+)([a-z]?)(\d*)$", code)
+    return (int(m.group(1)), m.group(2), int(m.group(3) or 0)) if m else (999, "", 0)
 
 
 def clean(v):
@@ -125,9 +175,9 @@ PAGE = """<!DOCTYPE html>
 <p>Leaves are sold in sets of two for R30 per set, and <strong>only one set per cultivar</strong> can be ordered. <strong>Minimum order: 5 sets (R150)</strong>, so please choose at least 5 different cultivars, plus postage. Choose your sets below, then send the order to us. We reply with an invoice that lists what is available, the postage quote and our banking details. See <a href="contact.html">Orders and Contact</a>.</p>
 <p><a href="plants.html">&larr; All plant lists</a></p>
 <label class="find">Search this list <input type="search" id="find" placeholder="Name, colour, hybridiser"></label>
-<ul class="cards" id="cards">
+<div id="cards">
 {cards}
-</ul>
+</div>
 <section id="basket" class="basket" aria-live="polite" hidden>
 <h2>Your order</h2>
 <ul id="lines"></ul>
@@ -162,7 +212,7 @@ def main():
             if not row[cfg["name"]] or clean(row[cfg["avail"]]).upper() != "L":
                 continue
             g = lambda k: clean(row[cfg[k]]) if cfg[k] is not None else ""
-            name = g("name")
+            name = NAME_FIXES.get(g("name"), g("name"))
             s = slug(name)
             while s in seen:
                 s += "-2"
@@ -184,8 +234,39 @@ def main():
                 except Exception as e:
                     print(f"  WARNING: damaged photo for {ascii(name)} (sheet row {r + 1}, save as imports/photo-overrides/{s}.jpg to replace it): {e}")
             items.append((dict(name=name, desc=g("desc"), type=g("type"), hybridizer=g("hybridizer"), extra=g("extra")), img))
-        items.sort(key=lambda t: t[0]["name"].lower())
-        cards = "\n".join(card(i, it, cfg, img) for i, (it, img) in enumerate(items))
+        if cfg.get("group"):
+            for it, _ in items:
+                it["code"] = code_of(it["name"])
+            items.sort(key=lambda t: (code_key(t[0]["code"]), t[0]["name"].lower()))
+            nodes = {}
+
+            def node(c):
+                return nodes.setdefault(c, {"cards": [], "kids": set()})
+
+            for i, (it, img) in enumerate(items):
+                chain = chain_of(it["code"])
+                for parent, child in zip(chain, chain[1:]):
+                    node(parent)["kids"].add(child)
+                node(chain[-1])["cards"].append(card(i, it, cfg, img))
+                node(chain[0])
+
+            def render(c, depth):
+                n = node(c)
+                label = GROUPS.get(c, c or "Other").removeprefix("S. ")
+                lvl = min(depth + 2, 4)
+                nl = chr(10)
+                out = f'<section class="grp-sec"><h{lvl}>{html.escape(label)}</h{lvl}>' + nl
+                if n["cards"]:
+                    out += '<ul class="cards">' + nl + nl.join(n["cards"]) + nl + "</ul>" + nl
+                for k in sorted(n["kids"], key=code_key):
+                    out += render(k, depth + 1)
+                return out + "</section>"
+
+            roots = sorted({chain_of(it["code"])[0] for it, _ in items}, key=code_key)
+            cards = chr(10).join(render(c, 0) for c in roots)
+        else:
+            items.sort(key=lambda t: t[0]["name"].lower())
+            cards = '<ul class="cards">\n' + "\n".join(card(i, it, cfg, img) for i, (it, img) in enumerate(items)) + "\n</ul>"
         desc = (f"{cfg['intro']} Sets of two leaves from R30, minimum order 5 sets. "
                 "Courier delivery across South Africa from Pringle Bay, Western Cape.")
         out = PAGE.format(title=html.escape(cfg["title"]), desc=html.escape(desc, True), base=BASE, page=cfg["page"],

@@ -1,9 +1,9 @@
 /* Mzanzi African Violets - simple, readable, mobile-friendly. Light and dark themes. */
-:root{color-scheme:light;--bg:#fbf9fd;--text:#222;--head:#5b3a8a;--header-bg:#5b3a8a;--link:#4a2f78;--card:#fff;--border:#e3dcee;--muted:#555;--warn:#a40000;--accent:#5b3a8a;--rule:#ddd;--img-filter:none}
+:root{color-scheme:light;--bg:#fbf9fd;--text:#222;--head:#5b3a8a;--header-bg:#5b3a8a;--link:#4a2f78;--card:#fff;--border:#e3dcee;--muted:#555;--warn:#a40000;--accent:#5b3a8a;--rule:#ddd;--img-filter:none;--section:#000}
 @media (prefers-color-scheme:dark){
-:root:not([data-theme="light"]){color-scheme:dark;--bg:#16121d;--text:#e9e5f0;--head:#cdb8f2;--header-bg:#2a1a47;--link:#c4acf2;--card:#201a2b;--border:#3b3150;--muted:#b0a8bd;--warn:#ff9a9a;--accent:#7a52b8;--rule:#3b3150;--img-filter:brightness(.92)}
+:root:not([data-theme="light"]){color-scheme:dark;--bg:#16121d;--text:#e9e5f0;--head:#cdb8f2;--header-bg:#2a1a47;--link:#c4acf2;--card:#201a2b;--border:#3b3150;--muted:#b0a8bd;--warn:#ff9a9a;--accent:#7a52b8;--rule:#3b3150;--img-filter:brightness(.92);--section:#fff}
 }
-:root[data-theme="dark"]{color-scheme:dark;--bg:#16121d;--text:#e9e5f0;--head:#cdb8f2;--header-bg:#2a1a47;--link:#c4acf2;--card:#201a2b;--border:#3b3150;--muted:#b0a8bd;--warn:#ff9a9a;--accent:#7a52b8;--rule:#3b3150;--img-filter:brightness(.92)}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#16121d;--text:#e9e5f0;--head:#cdb8f2;--header-bg:#2a1a47;--link:#c4acf2;--card:#201a2b;--border:#3b3150;--muted:#b0a8bd;--warn:#ff9a9a;--accent:#7a52b8;--rule:#3b3150;--img-filter:brightness(.92);--section:#fff}
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;color:var(--text);background:var(--bg)}
 .site-header{position:relative;background:var(--header-bg);color:#fff;padding:.75rem 1rem}
@@ -59,3 +59,8 @@ main.wide{max-width:72rem}
 .hero-fig{margin:0 0 1rem}
 .hero-fig img{display:block}
 .hero-fig figcaption{font-size:.85rem;color:var(--muted);margin-top:.3rem}
+.grp-sec[hidden]{display:none}
+.grp-sec>h2{font-size:1.2rem;margin:1.75rem 0 .75rem;border-bottom:1px solid var(--rule);padding-bottom:.25rem;color:var(--section)}
+.grp-sec>h3{font-size:1.1rem;margin:1.5rem 0 .6rem;color:var(--section)}
+.grp-sec>h4{font-size:1rem;margin:1.25rem 0 .5rem;color:var(--section)}
+.grp-sec .grp-sec{margin-left:.75rem}

@@ -64,6 +64,9 @@
   document.getElementById("find").addEventListener("input", function (e) {
     var q = e.target.value.toLowerCase().trim();
     cards.forEach(function (c) { c.hidden = q && c.dataset.search.indexOf(q) === -1; });
+    [].slice.call(document.querySelectorAll(".grp-sec")).forEach(function (sec) {
+      sec.hidden = !sec.querySelector(".card:not([hidden])");
+    });
   });
 
   update();
