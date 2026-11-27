@@ -116,13 +116,13 @@ PAGE = """<!DOCTYPE html>
 <body>
 <header class="site-header">
 <p class="brand"><a href="index.html"><img src="icons/logo-72.png" alt="" width="36" height="36">Mzanzi African Violets</a></p>
-<nav aria-label="Main"><a href="index.html">Home</a><a href="plants.html" aria-current="page">Plants</a><a href="care.html">African Violet Care</a><a href="location.html">Location</a><a href="contact.html">Orders &amp; Contact</a></nav>
+<nav aria-label="Main"><a href="index.html">Home</a><a href="plants.html" aria-current="page">Plants</a><a href="care.html">African Violet Care</a><a href="location.html">Location</a><a href="contact.html">Orders and Contact</a></nav>
 </header>
 <main class="wide">
 <h1>{h1}</h1>
 <p>{intro} {count} available. Last updated {updated}.</p>
 {note}
-<p>Leaves are sold in sets of two for R30 per set, and <strong>only one set per cultivar</strong> can be ordered. <strong>Minimum order: 5 sets (R150)</strong>, so please choose at least 5 different cultivars, plus postage. Choose your sets below, then send the order to us. We reply with an invoice that lists what is available, the postage quote and our banking details. See <a href="contact.html">Orders &amp; Contact</a>.</p>
+<p>Leaves are sold in sets of two for R30 per set, and <strong>only one set per cultivar</strong> can be ordered. <strong>Minimum order: 5 sets (R150)</strong>, so please choose at least 5 different cultivars, plus postage. Choose your sets below, then send the order to us. We reply with an invoice that lists what is available, the postage quote and our banking details. See <a href="contact.html">Orders and Contact</a>.</p>
 <p><a href="plants.html">&larr; All plant lists</a></p>
 <label class="find">Search this list <input type="search" id="find" placeholder="Name, colour, hybridiser"></label>
 <ul class="cards" id="cards">

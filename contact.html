@@ -20,10 +20,10 @@
 <body>
 <header class="site-header">
 <p class="brand"><a href="index.html"><img src="icons/logo-72.png" alt="" width="36" height="36">Mzanzi African Violets</a></p>
-<nav aria-label="Main"><a href="index.html">Home</a><a href="plants.html">Plants</a><a href="care.html">African Violet Care</a><a href="location.html">Location</a><a href="contact.html" aria-current="page">Orders & Contact</a></nav>
+<nav aria-label="Main"><a href="index.html">Home</a><a href="plants.html">Plants</a><a href="care.html">African Violet Care</a><a href="location.html">Location</a><a href="contact.html" aria-current="page">Orders and Contact</a></nav>
 </header>
 <main>
-<h1>Orders &amp; Contact</h1>
+<h1>Orders and Contact</h1>
 <p>To order plants or leaves, or ask a question, get in touch:</p>
 <ul>
 <li>Email: <a href="mailto:mzanziafricanviolets@gmail.com">mzanziafricanviolets@gmail.com</a></li>
@@ -44,6 +44,21 @@
 <h3>Postage and timing</h3>
 <p>We post across South Africa with The Courier Guy. Orders are packed over the weekend and sent out on Monday mornings.</p>
 <p>See what is available on the <a href="plants.html">plant list</a>.</p>
+<h2 id="contact-form">Send us a message</h2>
+<p>Use this form for questions, or to send an order. All fields are required.</p>
+<form id="contact" action="https://api.web3forms.com/submit" method="POST" data-key="ae42bc97-b895-4a9b-8526-46b652c92766">
+<input type="hidden" name="access_key" value="ae42bc97-b895-4a9b-8526-46b652c92766">
+<input type="hidden" name="subject" value="Message from the Mzanzi African Violets website">
+<input type="hidden" name="from_name" value="Mzanzi African Violets website">
+<input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+<p><label for="f-name">Name</label><input id="f-name" name="name" type="text" required autocomplete="name" maxlength="100"></p>
+<p><label for="f-email">Email address</label><input id="f-email" name="email" type="email" required autocomplete="email" maxlength="200"></p>
+<p><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="7" required maxlength="5000"></textarea></p>
+<p><button type="submit" class="btn">Send message</button></p>
+<p id="form-status" role="status" aria-live="polite"></p>
+<p class="small">Your name, email address and message are sent to us by email through the Web3Forms service, and used only to reply to you.</p>
+</form>
+<script src="js/contact.js"></script>
 </main>
 <footer>
 <p>&copy; 2026 Graham Goode. All rights reserved. Mzanzi African Violets &ndash; Pringle Bay, Western Cape, South Africa.</p>
