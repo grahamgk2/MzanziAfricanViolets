@@ -102,7 +102,9 @@ PAGE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{base}/{page}">
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="css/style.css">
+<script src="js/theme.js"></script>
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
