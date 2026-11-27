@@ -24,7 +24,7 @@ LISTS = [
     dict(sheet="Parent Plants", drawing=1, photo_col=0, page="african-violets.html", folder="violets",
          name=1, desc=2, type=3, hybridizer=4, avail=9, extra=None,
          title="African Violet Leaves for Sale South Africa | Mzanzi African Violets",
-         h1="African Violet Leaves", noun="African violet",
+         h1="African Violet Cultivars", noun="African violet",
          intro="Leaves of the African violet varieties currently available from our collection."),
     dict(sheet="Species", drawing=2, photo_col=2, page="species.html", folder="species",
          name=1, desc=3, type=None, hybridizer=None, avail=6, extra=4,
