@@ -25,8 +25,9 @@ LISTS = [
          name=1, desc=2, type=3, hybridizer=4, avail=9, extra=None,
          title="African Violet Leaves for Sale South Africa | Mzanzi African Violets",
          h1="African Violet Cultivars", noun="African violet",
+         note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.",
          intro="Leaves of the African violet varieties currently available from our collection."),
-    dict(sheet="Species", drawing=2, photo_col=2, page="species.html", folder="species",
+    dict(sheet="Species", note="", drawing=2, photo_col=2, page="species.html", folder="species",
          name=1, desc=3, type=None, hybridizer=None, avail=6, extra=4,
          title="Species Streptocarpus (Saintpaulia) Leaves South Africa | Mzanzi African Violets",
          h1="Species African Violets (Streptocarpus)", noun="species",
@@ -120,6 +121,7 @@ PAGE = """<!DOCTYPE html>
 <main class="wide">
 <h1>{h1}</h1>
 <p>{intro} {count} available. Last updated {updated}.</p>
+{note}
 <p>Leaves are sold in sets of two for R30 per set. <strong>Minimum order: 5 sets (R150)</strong>, plus postage. Choose your sets below, then send the order to us. We reply with an invoice that lists what is available, the postage quote and our banking details. See <a href="contact.html">Orders &amp; Contact</a>.</p>
 <p><a href="plants.html">&larr; All plant lists</a></p>
 <label class="find">Search this list <input type="search" id="find" placeholder="Name, colour, hybridiser"></label>
@@ -178,7 +180,7 @@ def main():
         desc = (f"{cfg['intro']} Sets of two leaves from R30, minimum order 5 sets. "
                 "Courier delivery across South Africa from Pringle Bay, Western Cape.")
         out = PAGE.format(title=html.escape(cfg["title"]), desc=html.escape(desc, True), base=BASE, page=cfg["page"],
-                          h1=html.escape(cfg["h1"]), intro=html.escape(cfg["intro"]), count=f"{len(items)} varieties",
+                          h1=html.escape(cfg["h1"]), note=(f'<p><em>{html.escape(cfg["note"])}</em></p>' if cfg["note"] else ""), intro=html.escape(cfg["intro"]), count=f"{len(items)} varieties",
                           updated=date.today().strftime("%d %B %Y").lstrip("0"), cards=cards,
                           label=json.dumps(cfg["h1"]))
         (ROOT / cfg["page"]).write_text(out, encoding="utf-8")
