@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://grahamgk2.github.io/MzanziAfricanViolets/sitemap.xml
