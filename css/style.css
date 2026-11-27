@@ -56,3 +56,6 @@ main.wide{max-width:72rem}
 #contact .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 #form-status{font-weight:600}
 @media (max-width:34rem){#contact .row{grid-template-columns:1fr}#contact label{padding-top:0}}
+.hero-fig{margin:0 0 1rem}
+.hero-fig img{display:block}
+.hero-fig figcaption{font-size:.85rem;color:var(--muted);margin-top:.3rem}
