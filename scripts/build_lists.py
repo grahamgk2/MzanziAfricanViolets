@@ -25,12 +25,12 @@ LISTS = [
          title="African Violet Leaves for Sale South Africa | Mzanzi African Violets",
          h1="African Violet Cultivars", noun="African violet",
          note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.",
-         intro="Leaves of the African violet varieties currently available from our collection."),
+         intro="African violet leaves for sale in South Africa. These are the hybrids and named varieties currently available from our collection in Pringle Bay, Western Cape, including miniatures and semiminiatures, many from other hybridisers around the world. Each set of two healthy leaves can be rooted at home to grow new plants, and we courier them anywhere in South Africa that couriers deliver."),
     dict(sheet="Species", key="species", label="Species African violets", price=30, note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.", drawing=2, photo_col=2, page="species.html", folder="species",
          name=0, desc=3, type=None, hybridizer=None, avail=6, extra=4, group=True,
          title="Species Streptocarpus (Saintpaulia) Leaves South Africa | Mzanzi African Violets",
          h1="Species African Violets (Streptocarpus)", noun="species",
-         intro="Leaves of species currently available. African violets are now classed as Streptocarpus (formerly Saintpaulia)."),
+         intro="Species African violet leaves for sale in South Africa. These are the wild species, now classified as Streptocarpus section Saintpaulia, currently available from our collection in Pringle Bay, Western Cape. They are grouped by relationship, with growing notes where we have them, and each set of two leaves can be rooted at home to grow new plants. We courier them anywhere in South Africa that couriers deliver."),
 ]
 
 
@@ -164,6 +164,8 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_ZA">
+<meta property="og:image" content="https://grahamgk2.github.io/MzanziAfricanViolets/images/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <header class="site-header">

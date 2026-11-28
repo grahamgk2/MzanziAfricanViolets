@@ -146,7 +146,7 @@
     d.setDrawColor(0); d.line(M, y, W - M, y); y += 6;
     text("Total (excluding postage)", 11, true);
     text(B.money(s.total), 11, true, W - M, "right"); y += 10;
-    var note = "This is an order summary, not an invoice. We will reply with an invoice that lists the leaves available from your order, the postage quote, the total and our banking details. Payment is by EFT.";
+    var note = "This is an order summary, not an invoice. We will reply with an invoice that lists the leaves available from your order, the postage quote, the total, and our banking details. Payment is by EFT.";
     d.setFont("helvetica", "normal"); d.setFontSize(9);
     var nl = d.splitTextToSize(note, W - 2 * M);
     need(5 * nl.length);
