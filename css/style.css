@@ -1,9 +1,9 @@
 /* Mzanzi African Violets - simple, readable, mobile-friendly. Light and dark themes. */
-:root{color-scheme:light;--bg:#fbf9fd;--text:#222;--head:#5b3a8a;--header-bg:#5b3a8a;--link:#4a2f78;--card:#fff;--border:#e3dcee;--muted:#555;--warn:#a40000;--accent:#5b3a8a;--rule:#ddd;--img-filter:none;--section:#000}
+:root{color-scheme:light;--bg:#fbf9fd;--text:#222;--head:#5b3a8a;--header-bg:#5b3a8a;--link:#4a2f78;--card:#fff;--border:#e3dcee;--muted:#555;--warn:#a40000;--accent:#5b3a8a;--accent-hover:#4a2f78;--rule:#ddd;--img-filter:none;--section:#000}
 @media (prefers-color-scheme:dark){
-:root:not([data-theme="light"]){color-scheme:dark;--bg:#16121d;--text:#e9e5f0;--head:#cdb8f2;--header-bg:#2a1a47;--link:#c4acf2;--card:#201a2b;--border:#3b3150;--muted:#b0a8bd;--warn:#ff9a9a;--accent:#7a52b8;--rule:#3b3150;--img-filter:brightness(.92);--section:#fff}
+:root:not([data-theme="light"]){color-scheme:dark;--bg:#16121d;--text:#e9e5f0;--head:#cdb8f2;--header-bg:#2a1a47;--link:#c4acf2;--card:#201a2b;--border:#3b3150;--muted:#b0a8bd;--warn:#ff9a9a;--accent:#7a52b8;--accent-hover:#63409c;--rule:#3b3150;--img-filter:brightness(.92);--section:#fff}
 }
-:root[data-theme="dark"]{color-scheme:dark;--bg:#16121d;--text:#e9e5f0;--head:#cdb8f2;--header-bg:#2a1a47;--link:#c4acf2;--card:#201a2b;--border:#3b3150;--muted:#b0a8bd;--warn:#ff9a9a;--accent:#7a52b8;--rule:#3b3150;--img-filter:brightness(.92);--section:#fff}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#16121d;--text:#e9e5f0;--head:#cdb8f2;--header-bg:#2a1a47;--link:#c4acf2;--card:#201a2b;--border:#3b3150;--muted:#b0a8bd;--warn:#ff9a9a;--accent:#7a52b8;--accent-hover:#63409c;--rule:#3b3150;--img-filter:brightness(.92);--section:#fff}
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;color:var(--text);background:var(--bg)}
 .site-header{position:relative;background:var(--header-bg);color:#fff;padding:.75rem 1rem}
@@ -108,3 +108,21 @@ nav a.order-link{background:rgba(255,255,255,.18);border-radius:999px;padding:.1
 #orderform input[type=radio]{width:1.1rem;height:1.1rem;accent-color:var(--accent)}
 @media (max-width:640px){#orderform .lab{padding-top:0}}
 .btn.cancel{color:var(--warn);border-color:var(--warn)}
+/* Order form buttons: three equal buttons spanning the text boxes, Cancel centred beneath */
+#orderform input[type=tel]{display:block;width:100%;min-width:0;padding:.55rem;font:inherit;color:var(--text);background:var(--card);border:1px solid var(--border);border-radius:6px}
+.btn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;max-width:40rem}
+.btn-grid .btn,.cancel-wrap .btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:2.9rem;padding:.5rem;font-size:.95rem;text-align:center;line-height:1.2}
+.cancel-wrap{display:flex;justify-content:center}
+.cancel-wrap .btn{width:calc((100% - 1rem) / 3)}
+.done-grid{margin:1rem 0}
+@media (max-width:640px){.btn-grid{grid-template-columns:1fr}.cancel-wrap .btn{width:100%}}
+/* Button hover, focus and disabled states */
+.btn{transition:background-color .15s,box-shadow .15s,transform .1s}
+.btn:hover:not(:disabled){background:var(--accent-hover);box-shadow:0 3px 8px rgba(0,0,0,.28);transform:translateY(-1px)}
+.btn:active:not(:disabled){transform:translateY(0);box-shadow:none}
+.btn:focus-visible{outline:3px solid var(--head);outline-offset:2px}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.btn.alt:hover:not(:disabled){background:var(--border);color:var(--head)}
+.btn.cancel:hover:not(:disabled){background:var(--warn);border-color:var(--warn);color:var(--card)}
+#orderform input:user-invalid{border-color:var(--warn)}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover:not(:disabled){transform:none}}

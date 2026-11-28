@@ -19,6 +19,7 @@
     return {
       name: form.elements.name.value.trim(),
       email: form.elements.email.value.trim(),
+      phone: form.elements.phone.value.trim(),
       town: form.elements.town.value.trim(),
       delivery: (form.querySelector("input[name=delivery]:checked") || {}).value || "",
       extra: form.elements.extra.value.trim(),
@@ -47,7 +48,7 @@
       t += "\n";
     });
     t += "Total: " + B.money(s.total) + " (" + s.count + " item" + (s.count === 1 ? "" : "s") + ", excluding postage)\n\n";
-    t += "Name: " + (s.cust.name || "") + "\nEmail: " + (s.cust.email || "") + "\nDelivery town: " + (s.cust.town || "") + "\n";
+    t += "Name: " + (s.cust.name || "") + "\nEmail: " + (s.cust.email || "") + "\nPhone: " + (s.cust.phone || "") + "\nDelivery town: " + (s.cust.town || "") + "\n";
     t += "Courier delivery: " + (s.cust.delivery || "") + "\n";
     if (s.cust.extra) t += (/locker/.test(s.cust.delivery) ? "Locker: " : "Street address: ") + s.cust.extra + "\n";
     if (s.cust.notes) t += "Notes: " + s.cust.notes + "\n";
@@ -115,7 +116,7 @@
     text("Pringle Bay, Western Cape, South Africa  |  mzanziafricanviolets@gmail.com", 9, false); y += 5;
     text("Date: " + new Date().toLocaleDateString("en-ZA"), 9, false); y += 9;
     var c = s.cust, any = false;
-    [["Name", c.name], ["Email", c.email], ["Delivery town", c.town], ["Courier delivery", c.delivery],
+    [["Name", c.name], ["Email", c.email], ["Phone", c.phone], ["Delivery town", c.town], ["Courier delivery", c.delivery],
      [/locker/.test(c.delivery) ? "Locker" : "Street address", c.extra], ["Notes", c.notes]].forEach(function (r) {
       if (!r[1]) return;
       any = true;
@@ -170,6 +171,14 @@
   /* ---- send ---- */
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    var em = form.elements.email;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em.value.trim())) {
+      em.setAttribute("aria-invalid", "true");
+      status.textContent = "Please enter a full email address, like name@example.com, so we can reply to you.";
+      em.focus();
+      return;
+    }
+    em.removeAttribute("aria-invalid");
     if (B.total() < B.MIN) { status.textContent = "The minimum order is " + B.money(B.MIN) + ". Please add more leaves first."; return; }
     var s = current();
     sendBtn.disabled = true;
@@ -180,6 +189,7 @@
       from_name: "Mzanzi African Violets website",
       name: s.cust.name,
       email: s.cust.email,
+      phone: s.cust.phone,
       delivery_town: s.cust.town,
       courier_delivery: s.cust.delivery,
       address_or_locker: s.cust.extra,

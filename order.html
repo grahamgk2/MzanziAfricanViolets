@@ -8,9 +8,9 @@
 <link rel="canonical" href="https://grahamgk2.github.io/MzanziAfricanViolets/order.html">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="light dark">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=3">
 <script src="js/theme.js"></script>
-<script src="js/basket.js?v=2" defer></script>
+<script src="js/basket.js?v=3" defer></script>
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -39,12 +39,14 @@
 <input type="hidden" name="access_key" value="ae42bc97-b895-4a9b-8526-46b652c92766">
 <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 <div class="row"><label for="o-name">Name</label><input id="o-name" name="name" type="text" required autocomplete="name" maxlength="100"></div>
-<div class="row"><label for="o-email">Email address</label><input id="o-email" name="email" type="email" required autocomplete="email" maxlength="200"></div>
+<div class="row"><label for="o-email">Email address</label><input id="o-email" name="email" type="email" required autocomplete="email" maxlength="200" pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}" title="Please enter a full email address, like name@example.com"></div>
+<div class="row"><label for="o-phone">Phone number</label><input id="o-phone" name="phone" type="tel" required autocomplete="tel" maxlength="30"></div>
 <div class="row"><label for="o-town">Delivery town</label><input id="o-town" name="town" type="text" required autocomplete="address-level2" maxlength="100"></div>
 <div class="row"><span class="lab" id="dl-label">Courier delivery</span><div class="radios" role="radiogroup" aria-labelledby="dl-label"><label class="radio"><input type="radio" name="delivery" value="To my door address" required> To my door address</label><label class="radio"><input type="radio" name="delivery" value="To a courier locker"> To a locker</label></div></div>
 <div class="row" id="dl-extra-row" hidden><label for="o-extra" id="dl-extra-label">Street address and suburb (optional)</label><input id="o-extra" name="extra" type="text" maxlength="200"></div>
 <div class="row"><label for="o-notes">Notes (optional)</label><textarea id="o-notes" name="notes" rows="4" maxlength="2000"></textarea></div>
-<div class="row"><span></span><div class="btns"><button type="submit" id="op-send" class="btn">Send order</button> <button type="button" id="op-copy" class="btn alt">Copy order text</button> <button type="button" id="op-pdf" class="btn alt">Download PDF</button> <button type="button" id="op-cancel" class="btn alt cancel">Cancel order</button></div></div>
+<div class="row"><span></span><div class="btn-grid"><button type="submit" id="op-send" class="btn">Send order</button><button type="button" id="op-copy" class="btn">Copy order text</button><button type="button" id="op-pdf" class="btn">Download PDF</button></div></div>
+<div class="row"><span></span><div class="cancel-wrap"><button type="button" id="op-cancel" class="btn alt cancel">Cancel order</button></div></div>
 <p id="op-status" role="status" aria-live="polite" class="status"></p>
 <p class="small">Your order details are sent to us by email through the Web3Forms service and used only to reply to you. The PDF is made on your own device. Prices exclude postage. You can also paste the copied text into WhatsApp (@ggoode.sa) or Facebook Messenger.</p>
 </form>
@@ -54,11 +56,11 @@
 <p>Your order has been sent. We will reply by email with an invoice. Keep a copy of your order below.</p>
 <div id="done-lines" class="order-lines"></div>
 <p id="done-total" class="tot"></p>
-<p class="btns"><button type="button" id="done-pdf" class="btn">Download PDF</button> <button type="button" id="done-copy" class="btn alt">Copy order text</button> <button type="button" id="done-print" class="btn alt">Print</button></p>
+<div class="btn-grid done-grid"><button type="button" id="done-pdf" class="btn">Download PDF</button><button type="button" id="done-copy" class="btn">Copy order text</button><button type="button" id="done-print" class="btn">Print</button></div>
 </div>
 </main>
 <script src="js/vendor/jspdf.umd.min.js" defer></script>
-<script src="js/order-page.js?v=2" defer></script>
+<script src="js/order-page.js?v=3" defer></script>
 <footer>
 <p>&copy; 2026 Graham Goode. All rights reserved. Mzanzi African Violets &ndash; Pringle Bay, Western Cape, South Africa.</p>
 </footer>

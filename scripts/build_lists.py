@@ -154,9 +154,9 @@ PAGE = """<!DOCTYPE html>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{base}/{page}">
 <meta name="color-scheme" content="light dark">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=3">
 <script src="js/theme.js"></script>
-<script src="js/basket.js?v=2" defer></script>
+<script src="js/basket.js?v=3" defer></script>
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -189,7 +189,7 @@ PAGE = """<!DOCTYPE html>
 <p>&copy; 2026 Graham Goode. All rights reserved. Mzanzi African Violets &ndash; Pringle Bay, Western Cape, South Africa.</p>
 </footer>
 <script>window.ORDER={{listKey:{listkey},label:{label},price:{price}}};</script>
-<script src="js/order.js?v=2" defer></script>
+<script src="js/order.js?v=3" defer></script>
 </body>
 </html>
 """
