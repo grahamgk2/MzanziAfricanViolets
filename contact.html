@@ -53,13 +53,13 @@
 <input type="hidden" name="from_name" value="Mzanzi African Violets website">
 <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 <div class="row"><label for="f-name">Name</label><input id="f-name" name="name" type="text" required autocomplete="name" maxlength="100"></div>
-<div class="row"><label for="f-email">Email address</label><input id="f-email" name="email" type="email" required autocomplete="email" maxlength="200"></div>
+<div class="row"><label for="f-email">Email address</label><input id="f-email" name="email" type="email" required autocomplete="email" maxlength="200" pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}" title="Please enter a full email address, like name@example.com"></div>
 <div class="row"><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="12" required maxlength="5000"></textarea></div>
 <div class="row"><span></span><button type="submit" class="btn">Send message</button></div>
 <p id="form-status" role="status" aria-live="polite"></p>
 <p class="small">Your name, email address and message are sent to us by email through the Web3Forms service, and used only to reply to you.</p>
 </form>
-<script src="js/contact.js"></script>
+<script src="js/contact.js?v=3"></script>
 </main>
 <footer>
 <p>&copy; 2026 Graham Goode. All rights reserved. Mzanzi African Violets &ndash; Pringle Bay, Western Cape, South Africa.</p>

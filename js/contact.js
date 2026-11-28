@@ -5,6 +5,14 @@
   f.addEventListener("submit", function (e) {
     e.preventDefault();
     if (f.dataset.key.indexOf("YOUR_") === 0) { status.textContent = "The form is not set up yet. Please email us instead."; return; }
+    var em = f.elements.email;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em.value.trim())) {
+      em.setAttribute("aria-invalid", "true");
+      status.textContent = "Please enter a full email address, like name@example.com, so we can reply to you.";
+      em.focus();
+      return;
+    }
+    em.removeAttribute("aria-invalid");
     var btn = f.querySelector("button[type=submit]");
     btn.disabled = true; status.textContent = "Sending...";
     var data = {};
