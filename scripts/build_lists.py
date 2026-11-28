@@ -19,13 +19,14 @@ NS = {"x": "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
 
 # One entry per list. cols are 0-based column indexes in the sheet.
 LISTS = [
-    dict(sheet="Parent Plants", drawing=1, photo_col=0, page="african-violets.html", folder="violets",
+    dict(sheet="Parent Plants", key="cultivars", label="African violet cultivars", price=30,
+         drawing=1, photo_col=0, page="african-violets.html", folder="violets",
          name=1, desc=2, type=3, hybridizer=4, avail=9, extra=None,
          title="African Violet Leaves for Sale South Africa | Mzanzi African Violets",
          h1="African Violet Cultivars", noun="African violet",
          note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.",
          intro="Leaves of the African violet varieties currently available from our collection."),
-    dict(sheet="Species", note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.", drawing=2, photo_col=2, page="species.html", folder="species",
+    dict(sheet="Species", key="species", label="Species African violets", price=30, note="This is a hobby, not a commercial greenhouse, so stock is limited and varies.", drawing=2, photo_col=2, page="species.html", folder="species",
          name=0, desc=3, type=None, hybridizer=None, avail=6, extra=4, group=True,
          title="Species Streptocarpus (Saintpaulia) Leaves South Africa | Mzanzi African Violets",
          h1="Species African Violets (Streptocarpus)", noun="species",
@@ -140,7 +141,7 @@ def card(i, item, cfg, img):
     return (f'<li class="card" data-name="{esc(item["name"], True)}" data-search="{esc((item["name"]+" "+item["desc"]+" "+item["hybridizer"]).lower(), True)}">'
             f'{pic}<div class="body"><h3>{esc(item["name"])}</h3>{"".join(meta)}'
             f'<p>{esc(item["desc"])}</p>{extra}'
-            f'<button type="button" class="toggle" aria-pressed="false">Add 1 set of 2 leaves</button>'
+            f'<button type="button" class="toggle" aria-pressed="false">Add to order &middot; R{cfg["price"]}</button>'
             f'</div></li>')
 
 
@@ -153,8 +154,9 @@ PAGE = """<!DOCTYPE html>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{base}/{page}">
 <meta name="color-scheme" content="light dark">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=2">
 <script src="js/theme.js"></script>
+<script src="js/basket.js?v=2" defer></script>
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" href="icons/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -172,26 +174,22 @@ PAGE = """<!DOCTYPE html>
 <h1>{h1}</h1>
 <p>{intro} {count} available. Last updated {updated}.</p>
 {note}
-<p>Leaves are sold in sets of two for R30 per set, and <strong>only one set per cultivar</strong> can be ordered. <strong>Minimum order: 5 sets (R150)</strong>, so please choose at least 5 different cultivars, plus postage. Choose your sets below, then send the order to us. We reply with an invoice that lists what is available, the postage quote and our banking details. See <a href="contact.html">Orders and Contact</a>.</p>
+<p>Leaves are sold in sets of two, and <strong>only one set per cultivar</strong> can be ordered. The <strong>minimum order is R150</strong> across all our lists, plus postage. Add leaves to your order below, review it in the order box at the bottom of the page, and send it to us. We reply with an invoice that lists what is available, the postage quote and our banking details. See <a href="contact.html">Orders and Contact</a>.</p>
 <p><a href="plants.html">&larr; All plant lists</a></p>
 <label class="find">Search this list <input type="search" id="find" placeholder="Name, colour, hybridiser"></label>
 <div id="cards">
 {cards}
 </div>
-<section id="basket" class="basket" aria-live="polite" hidden>
-<h2>Your order</h2>
-<ul id="lines"></ul>
-<p id="summary"></p>
-<p id="warn" class="warn" hidden></p>
-<p class="actions"><a id="mail" class="btn" href="#">Email this order</a> <button type="button" id="copy" class="btn">Copy order text</button></p>
-<p class="small">To order by WhatsApp (username @ggoode.sa) or Facebook Messenger, copy the order text and paste it into your message. Prices exclude postage.</p>
+<section id="basket" class="basket" aria-label="Your order" hidden>
+<button type="button" id="basket-head" class="basket-head" aria-expanded="true" aria-controls="basket-body"><span id="basket-summary">Your order</span><span class="chev" aria-hidden="true"></span></button>
+<div id="basket-body" class="basket-body"></div>
 </section>
 </main>
 <footer>
 <p>&copy; 2026 Graham Goode. All rights reserved. Mzanzi African Violets &ndash; Pringle Bay, Western Cape, South Africa.</p>
 </footer>
-<script>window.ORDER={{label:{label},email:"mzanziafricanviolets@gmail.com",setPrice:30,minSets:5}};</script>
-<script src="js/order.js"></script>
+<script>window.ORDER={{listKey:{listkey},label:{label},price:{price}}};</script>
+<script src="js/order.js?v=2" defer></script>
 </body>
 </html>
 """
@@ -267,12 +265,12 @@ def main():
         else:
             items.sort(key=lambda t: t[0]["name"].lower())
             cards = '<ul class="cards">\n' + "\n".join(card(i, it, cfg, img) for i, (it, img) in enumerate(items)) + "\n</ul>"
-        desc = (f"{cfg['intro']} Sets of two leaves from R30, minimum order 5 sets. "
+        desc = (f"{cfg['intro']} Sets of two leaves from R30, minimum order R150. "
                 "Courier delivery across South Africa from Pringle Bay, Western Cape.")
         out = PAGE.format(title=html.escape(cfg["title"]), desc=html.escape(desc, True), base=BASE, page=cfg["page"],
                           h1=html.escape(cfg["h1"]), note=(f'<p><em>{html.escape(cfg["note"])}</em></p>' if cfg["note"] else ""), intro=html.escape(cfg["intro"]), count=f"{len(items)} varieties",
                           updated=date.today().strftime("%d %B %Y").lstrip("0"), cards=cards,
-                          label=json.dumps(cfg["h1"]))
+                          label=json.dumps(cfg["label"]), listkey=json.dumps(cfg["key"]), price=cfg["price"])
         (ROOT / cfg["page"]).write_text(out, encoding="utf-8")
         missing = sum(1 for _, im in items if not im)
         print(f"{cfg['page']}: {len(items)} items, {missing} without photo")
