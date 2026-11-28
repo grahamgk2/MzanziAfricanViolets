@@ -186,7 +186,7 @@ PAGE = """<!DOCTYPE html>
 </section>
 </main>
 <footer>
-<p>&copy; 2026 Graham Goode. All rights reserved. Mzanzi African Violets &ndash; Pringle Bay, Western Cape, South Africa.</p>
+<p>&copy; 2026 Graham Goode. All rights reserved. Mzanzi African Violets &ndash; Pringle Bay, Western Cape, South Africa. <a href="privacy.html">Privacy</a></p>
 </footer>
 <script>window.ORDER={{listKey:{listkey},label:{label},price:{price}}};</script>
 <script src="js/order.js?v=3" defer></script>
