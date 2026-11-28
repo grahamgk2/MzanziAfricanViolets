@@ -166,7 +166,7 @@ PAGE = """<!DOCTYPE html>
 <body>
 <header class="site-header">
 <p class="brand"><a href="index.html"><img src="icons/logo-72.png" alt="" width="36" height="36">Mzanzi African Violets</a></p>
-<nav aria-label="Main"><a href="index.html">Home</a><a href="plants.html" aria-current="page">Plants</a><a href="care.html">African Violet Care</a><a href="location.html">Location</a><a href="contact.html">Orders and Contact</a></nav>
+<nav aria-label="Main"><a href="index.html">Home</a><a href="plants.html" aria-current="page">Plants</a><a href="care.html">African Violet Care</a><a href="propagation.html">Leaf Propagation</a><a href="location.html">Location</a><a href="contact.html">Orders and Contact</a></nav>
 </header>
 <main class="wide">
 <h1>{h1}</h1>
